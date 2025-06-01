@@ -7,7 +7,8 @@ from .forms import PostForm
 # Create your views here.
 def post_list(request):
 	# Filtramos los posts que ya han sido publicados y los ordenamos en orden descendente
-	posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('-published_date')
+	posts = Post.objects.filter(
+	    published_date__lte=timezone.now()).order_by('-published_date')
 	# Renderizamos la plantilla con los posts filtrados
 	return render(request, 'blog/post_list.html', {'posts': posts})
 
@@ -29,7 +30,7 @@ def post_new(request):
 			# Guardamos el formulario y lo asociamos al usuario actual
 			post = form.save(commit=False)
 			post.author = request.user
-			post.published_date = timezone.now()
+			#post.published_date = timezone.now()
 			post.save()
 			# Redirigimos al usuario a la página de detalle del post recién creado
 			return redirect('post_detail', pk=post.pk)
@@ -48,9 +49,18 @@ def post_edit(request, pk):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.published_date = timezone.now()
+            # post.published_date = timezone.now()
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
+        # Si la petición es GET, construimos el formulario con los datos del post existente
         form = PostForm(instance=post)
+	# Renderizamos la plantilla con el formulario
     return render(request, 'blog/post_edit.html', {'form': form})
+
+
+def post_draft_list(request):
+	# Filtramos los posts que no han sido publicados y los ordenamos en orden descendente
+    posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
+	# Renderizamos la plantilla con los posts filtrados
+    return render(request, 'blog/post_draft_list.html', {'posts': posts})
