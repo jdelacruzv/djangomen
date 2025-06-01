@@ -20,12 +20,17 @@
 	<body>
 		<header class="page-header">
 			<div container="container">
+				<a href="{% url 'post_new' %}" class="top-menu">
+					{% include './icons/file-earmark-plus.svg' %}
+				</a>				
 				<h1><a href="/">Django Men Blog</a></h1>
 			</div>
 		</header>
-		<main class="container">
+		<main class="content container">
 			<div class="row">
-				<div class="col">{% block content %} {% endblock %}</div>
+				<div class="col">{% block content %} 
+					{% endblock %}
+				</div>
 			</div>
 		</main>
 	</body>
