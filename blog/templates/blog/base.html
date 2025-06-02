@@ -20,17 +20,17 @@
 	<body>
 		<header class="page-header">
 			<div container="container">
+				<h1><a href="/">Django Men</a></h1>
 				{% if user.is_authenticated %}
 					<span>
 						<a href="{% url 'post_new' %}" class="top-menu">
 							{% include './icons/file-earmark-plus.svg' %}
 						</a>
 						<a href="{% url 'post_draft_list' %}" class="top-menu">
-							No publicados
+							{% include './icons/pencil-square.svg' %}
 						</a>
 					</span>
 				{% endif %}
-				<h1><a href="/">Django Men</a></h1>
 			</div>
 		</header>
 		<main class="content container">

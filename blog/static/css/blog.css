@@ -63,6 +63,13 @@ h4 {
     text-decoration: none;
 }
 
+.page-header > div[container="container"] {
+    display: flex;
+    justify-content: space-between; /* Lados opuestos */
+    align-items: center;            /* Centrado vertical */
+    padding: 0 20px;
+}
+
 .post {
     margin-bottom: 40px;
 }
@@ -114,6 +121,12 @@ h4 {
 .top-menu:visited {
     color: #FFFFFF;
     float: right;
-    font-size: 26pt;
-    margin-right: 20px;
+    /* font-size: 26pt; */
+    margin-right: 10px;
+}
+
+.top-menu svg {
+    width: 32px;   /* O el tamaño que prefieras */
+    height: 32px;
+    vertical-align: middle;
 }
