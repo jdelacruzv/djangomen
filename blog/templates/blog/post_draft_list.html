@@ -3,15 +3,18 @@
 {% block content %}
     {% for post in posts %}
         <article class="post">
-            <time class="date">
-                {{ post.created_date }}
-            </time>
-            <h2>
-                <a href="{% url 'post_detail' pk=post.pk %}">
-                    {{ post.title }}
-                </a>
-            </h2>
-            <p>{{ post.text|truncatechars:200 }}</p>
+            <div class="post-header">
+                <h2>
+                    <a href="{% url 'post_detail' pk=post.pk %}">
+                        {{ post.title }}
+                    </a>
+                </h2>
+                <time class="date">
+                    {{ post.created_date|date:"j F, Y" }}
+                </time>
+            </div>
+            <p>{{ post.text|truncatechars:250 }}</p>
+            <hr />
         </article>
     {% endfor %}
 {% endblock %}

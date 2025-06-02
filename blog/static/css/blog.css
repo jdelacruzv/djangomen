@@ -1,3 +1,52 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+h1, 
+h2, 
+h3, 
+h4 {
+    font-family: 'Lobster', cursive;
+    font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.actions form {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.btn-secondary,
+.btn-secondary:visited {
+    color: #1F85DE;
+    background: none;
+    border-color: #1F85DE;
+    margin-left: 15px;
+}
+
+.btn-secondary:hover {
+    color: #FFFFFF;
+    background-color: #1F85DE;
+    border-color: #1F85DE;
+}
+
+.date {
+    display: block;
+    color: #AAAAAA;
+    margin-bottom: 10px;
+}
+
 .page-header {
 	background-color: #1F85DE;
     margin-top: 0;
@@ -14,26 +63,50 @@
     text-decoration: none;
 }
 
-h1, 
-h2, 
-h3, 
-h4 {
-    font-family: 'Lobster', cursive;
+.post {
+    margin-bottom: 40px;
 }
 
-.date {
-    display: block;
-    color: #828282;
-    margin-bottom: 10px;
+.post h2 a, 
+.post h2 a:visited {
+    color: #333333;  
+    text-decoration: none;
 }
 
-.save {
-    float: right;
+.post button {
+    margin: 0;
 }
 
 .post-form textarea, 
 .post-form input {
     width: 100%;
+}
+
+.post-form a {
+    margin: 0;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.post-header .date {
+    color: #AAAAAA;
+    margin-bottom: 0;
+    font-size: 0.9em;
+}
+
+.post-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.save {
+    float: right;
 }
 
 .top-menu, 
@@ -43,27 +116,4 @@ h4 {
     float: right;
     font-size: 26pt;
     margin-right: 20px;
-}
-
-.post {
-    margin-bottom: 40px;
-}
-
-.post h2 a, 
-.post h2 a:visited {
-    color: #000000;
-    text-decoration: none;
-}
-
-.btn-secondary,
-.btn-secondary:visited {
-    color: #1F85DE;
-    background: none;
-    border-color: #1F85DE;
-    margin-left: 15px;
-}
-
-.btn-secondary:hover {
-    color: #FFFFFF;
-    background-color: #1F85DE;
 }
