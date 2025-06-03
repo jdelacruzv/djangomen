@@ -7,24 +7,49 @@
             <aside class="actions">
                 {% if not post.published_date %}
                     {% comment %} Publish button {% endcomment %}                    
-                    <form method="POST" action="{% url 'post_publish' pk=post.pk %}" class="post-form">
+                    <form 
+                        method="POST" 
+                        action="{% url 'post_publish' pk=post.pk %}" 
+                        class="post-form"
+                        onsubmit="return confirm('¿Deseas publicar el post?');"
+                    >
                         {% csrf_token %}
-                        <button type="submit" class="btn btn_md btn-secondary" name="publish">
-                            Publicar
+                        <button 
+                           type="submit" 
+                           class="btn btn_md btn-secondary" 
+                           name="publish" 
+                        >
+                           Publicar
                         </button>
                     </form>
                 {% endif %}
                 {% if user.is_authenticated %}
                     {% comment %} Edit button {% endcomment %}
-                    <form class="post-form">{% csrf_token %}
-                        <a class="btn btn-secondary" href="{% url 'post_edit' pk=post.pk %}">
+                    <form 
+                        class="post-form">
+                        {% csrf_token %}
+                        <a 
+                           class="btn btn-secondary" 
+                           href="{% url 'post_edit' pk=post.pk %}"
+                           title="Editar post"
+                        >
                             {% include './icons/pencil-fill.svg' %}
                         </a>
                     </form> 
                     {% comment %} Delete button {% endcomment %}
-                    <form method="POST" action="{% url 'post_remove' pk=post.pk %}" class="post-form">
+                    <form 
+                        method="POST" 
+                        action="{% url 'post_remove' pk=post.pk %}" 
+                        class="post-form"
+                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este post?');"
+                     >
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-md btn-secondary" name="delete">
+                        <button 
+                           type="submit" 
+                           class="btn btn-md btn-secondary" 
+                           name="delete"
+                           title="Eliminar post"
+                        >
                             {% include './icons/trash-fill.svg' %}
                         </button>
                     </form>
