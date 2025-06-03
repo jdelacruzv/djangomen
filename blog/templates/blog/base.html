@@ -21,19 +21,19 @@
 		<header class="page-header">
 			<div container="container">
 				<h1><a href="/">Django Men</a></h1>
-				{% if user.is_authenticated %}
-					<span>
-						<a href="{% url 'post_list' %}" class="top-menu" title="Listar posts">
-							{% include './icons/journal-text.svg' %}
-						</a>
+				<span>
+					<a href="{% url 'post_list' %}" class="top-menu" title="Listar posts">
+						{% include './icons/journal-text.svg' %}
+					</a>
+					{% if user.is_authenticated %}
 						<a href="{% url 'post_draft_list' %}" class="top-menu" title="Listar borradores">
 							{% include './icons/pencil-square.svg' %}
 						</a>
 						<a href="{% url 'post_new' %}" class="top-menu" title="Crear post">
 							{% include './icons/file-earmark-plus.svg' %}
 						</a>
-					</span>
-				{% endif %}
+					{% endif %}
+				</span>
 			</div>
 		</header>
 		<main class="content container">
