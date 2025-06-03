@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from .models import Post
@@ -20,6 +21,7 @@ def post_detail(request, pk):
 	return render(request, 'blog/post_detail.html', {'post': post})
 
 
+@login_required
 def post_new(request):
 	# Si la petición es POST, significa que el usuario está enviando datos del formulario
 	if request.method == "POST":
@@ -41,6 +43,7 @@ def post_new(request):
 	return render(request, 'blog/post_edit.html', {'form': form, 'title': 'Nuevo post'})
 
 
+@login_required
 def post_edit(request, pk):
 	# Obtenemos el post por su ID (pk) o devolvemos un error 404 si no existe
     post = get_object_or_404(Post, pk=pk)
@@ -64,6 +67,7 @@ def post_edit(request, pk):
     return render(request, 'blog/post_edit.html', {'form': form, 'title': 'Editar post'})
 
 
+@login_required
 def post_draft_list(request):
 	# Filtramos los posts que no han sido publicados y los ordenamos en orden descendente
     posts = Post.objects.filter(published_date__isnull=True).order_by('-created_date')
@@ -71,6 +75,7 @@ def post_draft_list(request):
     return render(request, 'blog/post_draft_list.html', {'posts': posts})
 
 
+@login_required
 def post_publish(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
@@ -78,6 +83,7 @@ def post_publish(request, pk):
     return redirect('post_list')
 
 
+@login_required
 def post_remove(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
