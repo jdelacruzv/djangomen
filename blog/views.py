@@ -38,25 +38,30 @@ def post_new(request):
 	else:
 		form = PostForm()
 	# Renderizamos la plantilla con el formulario
-	return render(request, 'blog/post_edit.html', {'form': form})
+	return render(request, 'blog/post_edit.html', {'form': form, 'title': 'Nuevo post'})
 
 
 def post_edit(request, pk):
 	# Obtenemos el post por su ID (pk) o devolvemos un error 404 si no existe
     post = get_object_or_404(Post, pk=pk)
+    # Si la petición es POST, significa que el usuario está enviando datos del formulario
     if request.method == "POST":
+        # Construimos el formulario con los datos del POST y los datos del post existente
         form = PostForm(request.POST, instance=post)
+        # Validamos que el formulario sea correcto
         if form.is_valid():
+            # Guardamos el formulario y lo asociamos al usuario actual
             post = form.save(commit=False)
             post.author = request.user
             # post.published_date = timezone.now()
             post.save()
+            
             return redirect('post_detail', pk=post.pk)
     else:
         # Si la petición es GET, construimos el formulario con los datos del post existente
         form = PostForm(instance=post)
 	# Renderizamos la plantilla con el formulario
-    return render(request, 'blog/post_edit.html', {'form': form})
+    return render(request, 'blog/post_edit.html', {'form': form, 'title': 'Editar post'})
 
 
 def post_draft_list(request):
