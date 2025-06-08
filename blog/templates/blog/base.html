@@ -20,19 +20,32 @@
 	<body>
 		<header class="page-header">
 			<div container="container">
-				<h1><a href="/">Django Men</a></h1>
+				<h1><a href="/">Django@Men</a></h1>
 				<span>
-					<a href="{% url 'post_list' %}" class="top-menu" title="Listar posts">
-						{% include './icons/journal-text.svg' %}
-					</a>
 					{% if user.is_authenticated %}
+						<form method="POST" action="{% url 'logout' %}" class="top-menu user-info">
+							{% csrf_token %}
+							Hello: {{ user.username }}
+							<small>
+								( <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
+									Cerrar
+								</button> )
+							</small>
+						</form>						
 						<a href="{% url 'post_draft_list' %}" class="top-menu" title="Listar borradores">
 							{% include './icons/pencil-square.svg' %}
 						</a>
 						<a href="{% url 'post_new' %}" class="top-menu" title="Crear post">
 							{% include './icons/file-earmark-plus.svg' %}
 						</a>
+					{% else %}
+						<a href="{% url 'login' %}" class="top-menu" title="Iniciar sesión">							
+							{% include './icons/door-open.svg' %}
+						</a>
 					{% endif %}
+					<a href="{% url 'post_list' %}" class="top-menu" title="Listar posts">
+						{% include './icons/journal-text.svg' %}
+					</a>
 				</span>
 			</div>
 		</header>
