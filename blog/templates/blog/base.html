@@ -5,50 +5,85 @@
 		<meta charset="UTF-8" />
 		<title>Django Men blog</title>
 	   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSS -->
 		<link
-         rel="stylesheet"
+      rel="stylesheet"
 			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
 			integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
 			crossorigin="anonymous"
 		/>
+    <!-- Google Fonts -->
 		<link
          rel="stylesheet"
          href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"
 		/>
+    <!-- CSS personalizado -->
 		<link rel="stylesheet" href="{% static 'css/blog.css' %}" />
 	</head>
 	<body>
-		<header class="page-header">
-			<div container="container">
-				<h1><a href="/">Django@Men</a></h1>
-				<span>
-					{% if user.is_authenticated %}
-						<form method="POST" action="{% url 'logout' %}" class="top-menu user-info">
-							{% csrf_token %}
-							Hello: {{ user.username }}
-							<small>
-								( <button type="submit" class="btn btn-link p-0 m-0 align-baseline">
-									Cerrar
-								</button> )
-							</small>
-						</form>						
-						<a href="{% url 'post_draft_list' %}" class="top-menu" title="Listar borradores">
-							{% include './icons/pencil-square.svg' %}
-						</a>
-						<a href="{% url 'post_new' %}" class="top-menu" title="Crear post">
-							{% include './icons/file-earmark-plus.svg' %}
-						</a>
-					{% else %}
-						<a href="{% url 'login' %}" class="top-menu" title="Iniciar sesión">							
-							{% include './icons/door-open.svg' %}
-						</a>
-					{% endif %}
-					<a href="{% url 'post_list' %}" class="top-menu" title="Listar posts">
-						{% include './icons/journal-text.svg' %}
-					</a>
-				</span>
-			</div>
+    <!-- Encabezado -->
+		<header>
+			<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+				<div class="container-fluid">
+          <!-- Nombre del blog -->
+          <h1>
+            <a href="/" class="navbar-brand d-flex align-items-center">
+					  	{% include './icons/cpu.svg' %} <span class="ms-1">Django@Men</span>            
+					  </a>
+          </h1>
+          <!-- Botón hamburguesa -->
+				  <button
+            class="navbar-toggler"
+            data-bs-toggle="collapse"
+            type="button"
+            data-bs-target="#navbarMenu"
+            aria-controls="navbarMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- Menú colapsable -->
+          <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav ms-auto mb-2 mb-md-0">              
+              <li class="nav-item">
+                <a href="{% url 'post_list' %}" class="nav-link d-flex align-items-center">
+                  {% include './icons/list.svg' %}<span class="ms-1">Listar</span>
+                </a>              
+              </li>              
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a href="{% url 'post_new' %}" class="nav-link d-flex align-items-center">
+                    {% include './icons/plus-circle.svg' %}<span class="ms-1">Agregar</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="{% url 'post_draft_list' %}" class="nav-link d-flex align-items-center">
+                    {% include './icons/pencil-square.svg' %}<span class="ms-1">Borradores</span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <form method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    {% comment %} Hello: {{ user.username }} {% endcomment %}
+                      <button type="submit" class="nav-link d-flex align-items-center">
+                        {% include './icons/box-arrow-right.svg' %}<span class="ms-1">Cerrar</span> 
+                      </button>
+                  </form>	
+                </li>    	         	
+					    {% else %}					
+                <li class="nav-item">
+                  <a href="{% url 'login' %}" class="nav-link d-flex align-items-center">
+                    {% include './icons/box-arrow-right.svg' %}<span class="ms-1">Inicio</span>
+                  </a>
+                </li>
+					    {% endif %}					    
+            </ul>
+          </div>
+        </div>
+			</nav>				
 		</header>
+    <!-- Contenido principal -->
 		<main class="content container">
 			<div class="row">
 				<div class="col">
@@ -56,5 +91,7 @@
 				</div>
 			</div>
 		</main>
+    <!-- Bootstrap Bundle JS -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 	</body>
 </html>

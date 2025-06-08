@@ -1,7 +1,19 @@
-html, body {
+/* html, body {
     margin: 0;
     padding: 0;
-}
+} */
+
+/* Fondo oscuro general */
+body {
+	background-color: #121212;
+	color: #ffffff;
+  }
+  
+  /* Animación suave al mostrar/ocultar el menú hamburguesa */
+  .navbar-collapse {
+	transition: all 0.3s ease;
+  }
+  
 
 h1, 
 h2, 
@@ -10,21 +22,7 @@ h4 {
     font-family: 'Lobster', cursive;
     font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
     font-size: 2rem;
-    font-weight: 700;
-}
-
-.actions {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
-    align-items: center;
-    justify-content: center;
-}
-
-.actions form {
-    display: inline-flex;
-    align-items: center;
-    margin: 0;
+    font-weight: 600;
 }
 
 .btn-secondary,
@@ -41,7 +39,7 @@ h4 {
     border-color: #1F85DE;
 }
 
-.date {
+/* .date {
     display: block;
     color: #AAAAAA;
     margin-bottom: 10px;
@@ -53,9 +51,9 @@ h4 {
     margin-top: 0;
     margin-bottom: 40px;
     padding: 20px 20px 20px 40px;
-}
+} */
 
-.page-header h1, 
+/* .page-header h1, 
 .page-header h1 a, 
 .page-header h1 a:visited, 
 .page-header h1 a:active {
@@ -113,43 +111,3 @@ h4 {
     font-weight: 700;
 }
 
-.save {
-    float: right;
-}
-
-span > p {
- margin: 0;   
-}
-
-span > p small > a {
-    text-decoration: none;   
-}
-
-.top-menu, 
-.top-menu:hover, 
-.top-menu:visited {
-    color: #FFFFFF;
-    float: right;
-    margin-right: 10px;
-}
-
-.top-menu svg {
-    width: 24px;   /* O el tamaño que prefieras */
-    height: 24px;
-    vertical-align: middle;
-}
-
-.user-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 0;
-}
-
-.user-info button {
-    color:inherit; 
-    text-decoration:none; 
-    background:none;
-    border:none; 
-    cursor:pointer;
-}
