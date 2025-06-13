@@ -48,6 +48,19 @@ hr {
     background-color: #000000;
 }
 
+.login-center {
+    min-height: calc(100vh - 58px);  /* 58px es el alto de tu header/navbar */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    width: 400px;
+    border-radius: 10px;
+    padding: 2rem;
+}
+
 .post {
     margin-bottom: 40px;
 }
@@ -96,3 +109,10 @@ hr {
 .post-title {
     margin-bottom: 20px;
 }
+
+@media (max-width: 576px) {
+    .login-container {
+      max-width: 90vw;
+      padding: 1.5rem;
+    }
+  }
