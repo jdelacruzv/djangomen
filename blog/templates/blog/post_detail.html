@@ -12,7 +12,9 @@
           onsubmit="return confirm('¿Deseas publicar el post?');"
         >
 			  	{% csrf_token %}
-			  	<button type="submit" class="btn btn_md btn-secondary" name="publish">Publicar</button>
+			  	<button type="submit" class="btn btn_md btn-secondary" name="publish" title="Publicar post"> 		
+						{% include './icons/cloud-upload-fill.svg' %}
+					</button>
 			  </form>
 			{% endif %} 
       {% if user.is_authenticated %} 

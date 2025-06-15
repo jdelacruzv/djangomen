@@ -47,32 +47,41 @@
           <!-- Menú colapsable -->
           <div class="collapse navbar-collapse" id="navbarMenu">
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">              
+              <!-- Menu listar -->
               <li class="nav-item">
                 <a href="{% url 'post_list' %}" class="nav-link d-flex align-items-center">
                   {% include './icons/list.svg' %}<span class="ms-1">Listar</span>
                 </a>              
               </li>              
               {% if user.is_authenticated %}
+                <!-- Menu agregar -->
                 <li class="nav-item">
                   <a href="{% url 'post_new' %}" class="nav-link d-flex align-items-center">
                     {% include './icons/plus-circle.svg' %}<span class="ms-1">Agregar</span>
                   </a>
                 </li>
+                <!-- Menu borradores -->
                 <li class="nav-item">
                   <a href="{% url 'post_draft_list' %}" class="nav-link d-flex align-items-center">
                     {% include './icons/pencil-square.svg' %}<span class="ms-1">Borradores</span>
                   </a>
                 </li>
+                <!-- Menu logout -->
                 <li class="nav-item">
-                  <form method="POST" action="{% url 'logout' %}">
+                  <form 
+                    method="POST" 
+                    action="{% url 'logout' %}" 
+                    onsubmit="return confirm('¿Estas seguro que deseas salir del sistema?');"
+                  >
                     {% csrf_token %}
                     {% comment %} Hello: {{ user.username }} {% endcomment %}
-                      <button type="submit" class="nav-link d-flex align-items-center">
-                        {% include './icons/box-arrow-right.svg' %}<span class="ms-1">Salir</span> 
-                      </button>
+                    <button type="submit" class="nav-link d-flex align-items-center">
+                      {% include './icons/box-arrow-right.svg' %}<span class="ms-1">Salir</span> 
+                    </button>
                   </form>	
                 </li>    	         	
 					    {% else %}					
+                <!-- Menu login -->
                 <li class="nav-item">
                   <a href="{% url 'login' %}" class="nav-link d-flex align-items-center">
                     {% include './icons/box-arrow-left.svg' %}<span class="ms-1">Entrar</span>

@@ -65,6 +65,7 @@ hr {
     margin-bottom: 40px;
 }
 
+.post h2,
 .post h2 a, 
 .post h2 a:visited,
 .post-title,
@@ -81,7 +82,7 @@ hr {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
 }
 
 .post-header time {
