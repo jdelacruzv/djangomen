@@ -36,6 +36,18 @@ hr {
     align-items: center;
 }
 
+.comment {
+    margin: 1.25rem 0 1.25rem 1.25rem;
+}
+
+.comment h5 {
+    margin-bottom: .1rem;    
+}
+
+.comment p {
+    margin-top: 1rem;    
+}
+
 .btn-secondary,
 .btn-secondary:visited {
     color: #FFFFFF;
@@ -85,7 +97,8 @@ hr {
     margin-bottom: 25px;
 }
 
-.post-header time {
+.post-header time,
+.comment time {
     color: #AAAAAA;
     margin-bottom: 0;
     font-size: 0.9em;
