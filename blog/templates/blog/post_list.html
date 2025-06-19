@@ -15,7 +15,8 @@
       </div>
      	<p>{{ post.text|truncatechars:250 }}</p>
       <a class="btn btn-outline-light mt-2" href="{% url 'post_detail' pk=post.pk %}" role="button">
-        Comments: {{ post.comments.count }}
+        Comentarios: {{ post.comments.count }}
+        {% comment %} Comentarios: {{ post.approved_comments.count }} {% endcomment %}
       </a>
     </article>
     <hr />

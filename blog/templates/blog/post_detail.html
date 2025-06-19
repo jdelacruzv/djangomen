@@ -50,9 +50,31 @@
 </article>
 <hr>
 <a class="btn btn-outline-light mb-3" href="{% url 'add_comment_to_post' pk=post.pk %}" role="button">
-	Add comment
+	Agregar comentario
 </a>
 {% for comment in post.comments.all %}
+  {% if user.is_authenticated or comment.approved_comment %}
+  	<div class="comment">
+  	  <div class="date">
+  	    <time class="order-1 order-md-2">{{ comment.created_date }}</time>
+  	    {% if not comment.approved_comment %}
+  	      <a class="btn btn-outline-danger" href="{% url 'comment_remove' pk=comment.pk %}" role="button">
+  	         {% include './icons/hand-thumbs-down-fill.svg' %}
+  	      </a>
+  	      <a class="btn btn-outline-success" href="{% url 'comment_approve' pk=comment.pk %}" role="button">
+  	         {% include './icons/hand-thumbs-up-fill.svg' %}
+  	      </a>
+  	    {% endif %}
+  	  </div>
+			<h5><strong>{{ comment.author }}</strong></h5>
+  	  {% comment %} <time class="order-1 order-md-2">{{ post.published_date }}</time> {% endcomment %}
+			<p>{{ comment.text|linebreaksbr }}</p>
+  	</div>
+  {% endif %}
+{% empty %}
+    <p>Aún no hay comentarios aquí :(</p>
+{% endfor %}
+{% comment %} {% for comment in post.comments.all %}
   <div class="comment">
 		<h5><strong>{{ comment.author }}</strong></h5>
   	<time class="order-1 order-md-2">{{ post.published_date }}</time>
@@ -60,5 +82,5 @@
   </div>
 {% empty %}
   <p>Aún no hay comentarios aquí :(</p>
-{% endfor %}
+{% endfor %} {% endcomment %}
 {% endblock %}
