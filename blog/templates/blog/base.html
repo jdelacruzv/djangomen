@@ -66,6 +66,12 @@
                     {% include './icons/pencil-square.svg' %}<span class="ms-1">Borradores</span>
                   </a>
                 </li>
+                <!-- Menu admin -->
+                <li class="nav-item">
+                  <a href="{% url 'admin:index' %}" class="nav-link d-flex align-items-center">
+                    {% include './icons/gear.svg' %}<span class="ms-1">Admin</span>
+                  </a>
+                </li>
                 <!-- Menu logout -->
                 <li class="nav-item">
                   <form 
