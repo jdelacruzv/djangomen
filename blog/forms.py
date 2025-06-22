@@ -22,5 +22,5 @@ class CommentForm(forms.ModelForm):
         fields = ('author', 'text',)
         labels = {
             'author': 'Autor',
-         			'text': 'Contenido',
+         	'text': 'Contenido',
         }

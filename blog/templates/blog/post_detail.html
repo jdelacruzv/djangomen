@@ -67,20 +67,10 @@
   	    {% endif %}
   	  </div>
 			<h5><strong>{{ comment.author }}</strong></h5>
-  	  {% comment %} <time class="order-1 order-md-2">{{ post.published_date }}</time> {% endcomment %}
 			<p>{{ comment.text|linebreaksbr }}</p>
   	</div>
   {% endif %}
 {% empty %}
     <p>Aún no hay comentarios aquí :(</p>
 {% endfor %}
-{% comment %} {% for comment in post.comments.all %}
-  <div class="comment">
-		<h5><strong>{{ comment.author }}</strong></h5>
-  	<time class="order-1 order-md-2">{{ post.published_date }}</time>
-		<p>{{ comment.text|linebreaksbr }}</p>
-  </div>
-{% empty %}
-  <p>Aún no hay comentarios aquí :(</p>
-{% endfor %} {% endcomment %}
 {% endblock %}
