@@ -124,6 +124,24 @@ hr {
     margin-bottom: 20px;
 }
 
+.reset-container {
+    max-width: 550px; /* o el ancho que prefieras */
+    width: 100%;
+    margin: 0 auto;   
+}
+
+/* blog/static/blog/styles.css */
+.reset-container input[type="password"] {
+    /* Aplica solo a los inputs de contraseña en el reset */
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 4px;
+    padding: 0.5rem;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
 @media (max-width: 576px) {
     .login-container {
       max-width: 90vw;

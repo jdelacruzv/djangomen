@@ -59,7 +59,7 @@ ROOT_URLCONF = 'djangomen.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'blog' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,3 +131,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Login URL
 LOGIN_REDIRECT_URL = '/'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
