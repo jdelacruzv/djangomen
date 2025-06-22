@@ -1,13 +1,21 @@
+html, body {
+    height: 100%;
+    min-height: 100%;
+}
+
 /* Fondo oscuro general */
 body {
 	background-color: #121212;
 	color: #ffffff;
-  }
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
   
-  /* Animación suave al mostrar/ocultar el menú hamburguesa */
-  .navbar-collapse {
-	  transition: all 0.3s ease;
-  }
+/* Animación suave al mostrar/ocultar el menú hamburguesa */
+.navbar-collapse {
+    transition: all 0.3s ease;
+}
   
 h1, 
 h2, 
@@ -21,6 +29,14 @@ h4 {
 
 hr {
     margin: 3rem 0;
+}
+
+main.container {
+    flex: 1 0 auto;
+}
+
+footer {
+    margin-top: auto;
 }
 
 .actions {
@@ -147,4 +163,4 @@ hr {
       max-width: 90vw;
       padding: 1.5rem;
     }
-  }
+}
