@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-t4327igkg6inql5ghfmu*&jw+ixzlsv=1o!s2s($6v_$1a9v^v
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'.vercel.app',
+	'.pythonanywhere.com',
+	' djangomenblog.pythonanywhere.com',
 	'localhost',
 	'127.0.0.1', 
 ]
