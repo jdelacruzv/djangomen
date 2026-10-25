@@ -3,7 +3,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<title>Django Men blog</title>
+		<title>DjangoMen's Blog</title>
 	   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap CSS -->
 		<link
@@ -19,6 +19,7 @@
 		/>
     <!-- CSS personalizado -->
 		<link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'cpu.svg' %}?v=2" />
 	</head>
 	{% comment %} <body class="{% block body_class %}{% endblock %}"> {% endcomment %}
   <body>
@@ -29,7 +30,7 @@
           <!-- Nombre del blog -->
           <h1>
             <a href="/" class="navbar-brand d-flex align-items-center text-dark">
-					  	{% include './icons/cpu.svg' %} <span class="ms-1">Django@Men</span>            
+                <span>DjangoMen's Blog</span>
 					  </a>
           </h1>
           <!-- Botón hamburguesa -->
@@ -109,7 +110,7 @@
     <footer class="bg-light text-dark text-center py-4 mt-auto border-top">
       <div class="container">
         <small>
-          &copy; {% now "Y" %} Django@Men &middot; Desarrollado con 
+          &copy; {% now "Y" %} DjangoMen's Blog &middot; Desarrollado con
           <a href="https://www.djangoproject.com/" class="text-primary text-decoration-none" target="_blank" rel="noopener">Django</a>
           y
           <a href="https://getbootstrap.com/" class="text-primary text-decoration-none" target="_blank" rel="noopener">Bootstrap</a>
