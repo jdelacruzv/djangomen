@@ -3,21 +3,21 @@
 	<div
 		class="post-header d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2"
 	>
-		<time class="order-1 order-md-2">
-			{{ post.published_date|date:"j F, Y" }}
-		</time>
 		<h2 class="order-2 order-md-1 mb-0">
 			<a href="{% url 'post_detail' pk=post.pk %}"> {{ post.title }} </a>
 		</h2>
 	</div>
 	<p>{{ post.text|striptags|truncatechars:250 }}</p>
-	<a
-		class="btn btn-outline-dark mt-2"
-		href="{% url 'post_detail' pk=post.pk %}"
-		role="button"
-	>
-		Comentarios: {{ post.approved_comments.count }}
-	</a>
+	<div class="post-footer">
+		<a
+			class="btn btn-outline-dark"
+			href="{% url 'post_detail' pk=post.pk %}"
+			role="button"
+		>
+			Comentarios: {{ post.approved_comments.count }}
+		</a>
+		<time>{{ post.published_date|date:"j F, Y" }}</time>
+	</div>
 </article>
 <hr />
 {% endfor %} {% endblock %}
