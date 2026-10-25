@@ -1,7 +1,8 @@
 # djangomen
+
 Example from the Django Girls tutorial.
 
-**Live demo:** [https://jdelacruz.pythonanywhere.com/](https://jdelacruz.pythonanywhere.com/)
+**Live demo:** [https://djangomenblog.pythonanywhere.com/](https://djangomenblog.pythonanywhere.com/)
 
 ## Production settings
 
@@ -14,7 +15,6 @@ Generate a key in the project's virtual environment with:
 ```bash
 python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
 ```
-
 
 Home page of the blog without logging in.
 
