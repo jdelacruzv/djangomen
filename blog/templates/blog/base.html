@@ -23,12 +23,12 @@
 	{% comment %} <body class="{% block body_class %}{% endblock %}"> {% endcomment %}
   <body>
     <!-- Encabezado -->
-		<header>
-			<nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+    <header class="site-header">
+      <nav class="navbar navbar-expand-md navbar-light">
 				<div class="container-fluid">
           <!-- Nombre del blog -->
           <h1>
-            <a href="/" class="navbar-brand d-flex align-items-center">
+            <a href="/" class="navbar-brand d-flex align-items-center text-dark">
 					  	{% include './icons/cpu.svg' %} <span class="ms-1">Django@Men</span>            
 					  </a>
           </h1>
@@ -106,13 +106,13 @@
     </main>
     {% endblock %}
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center py-4 mt-auto">
+    <footer class="bg-light text-dark text-center py-4 mt-auto border-top">
       <div class="container">
         <small>
           &copy; {% now "Y" %} Django@Men &middot; Desarrollado con 
-          <a href="https://www.djangoproject.com/" class="text-info text-decoration-none" target="_blank" rel="noopener">Django</a>
+          <a href="https://www.djangoproject.com/" class="text-primary text-decoration-none" target="_blank" rel="noopener">Django</a>
           y
-          <a href="https://getbootstrap.com/" class="text-info text-decoration-none" target="_blank" rel="noopener">Bootstrap</a>
+          <a href="https://getbootstrap.com/" class="text-primary text-decoration-none" target="_blank" rel="noopener">Bootstrap</a>
         </small>
       </div>
     </footer>

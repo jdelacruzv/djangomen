@@ -1,166 +1,362 @@
-html, body {
-    height: 100%;
-    min-height: 100%;
+:root {
+	--site-width: 840px;
 }
 
-/* Fondo oscuro general */
+html,
 body {
-	background-color: #121212;
-	color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+	height: 100%;
+	min-height: 100%;
 }
-  
-/* Animación suave al mostrar/ocultar el menú hamburguesa */
+
+body {
+	background: radial-gradient(
+		circle at top,
+		#ffffff 0%,
+		#f4f7ff 35%,
+		#eef2ff 100%
+	);
+	color: #1f2937;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+	line-height: 1.6;
+}
+
 .navbar-collapse {
-    transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
-  
-h1, 
-h2, 
-h3, 
+
+h1,
+h2,
+h3,
 h4 {
-    font-family: 'Lobster', cursive;
-    font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
+	font-family: "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+	font-size: 2rem;
+	font-weight: 700;
+	color: #111827;
+	letter-spacing: -0.03em;
 }
 
 hr {
-    margin: 3rem 0;
+	margin: 3rem 0;
+	border-color: rgba(15, 23, 42, 0.09);
 }
 
 main.container {
-    flex: 1 0 auto;
+	flex: 1 0 auto;
+	max-width: calc(var(--site-width) + clamp(2rem, 4vw, 4rem));
+	padding-top: 3rem;
+	padding-bottom: 4rem;
+	padding-inline: clamp(1rem, 2vw, 2rem);
+}
+
+header .navbar {
+	width: calc(100% - clamp(2rem, 4vw, 4rem));
+	max-width: var(--site-width);
+	margin-inline: auto;
+}
+
+header .navbar .container-fluid {
+	padding-inline: 0;
+}
+
+.site-header {
+	background-color: #ffffff;
+	border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+	box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
 }
 
 footer {
-    margin-top: auto;
+	margin-top: auto;
+}
+
+.navbar-light {
+	background-color: transparent !important;
+}
+
+.navbar-light .navbar-brand,
+.navbar-light .nav-link,
+.navbar-light .nav-link:hover,
+.navbar-light .navbar-brand:hover {
+	color: #1f2937 !important;
+}
+
+.navbar-light .nav-link {
+	transition: opacity 0.2s ease;
+}
+
+.navbar-light .nav-link:hover {
+	opacity: 0.8;
+}
+
+.navbar-toggler {
+	border-color: rgba(31, 41, 55, 0.25);
+}
+
+.navbar-toggler-icon {
+	filter: invert(0.3);
+}
+
+a {
+	color: #0f172a;
+	transition:
+		color 0.2s ease,
+		opacity 0.2s ease;
+}
+
+a:hover {
+	color: #2563eb;
+	text-decoration: none;
+}
+
+.btn {
+	border-radius: 0.75rem;
+	padding: 0.7rem 1.1rem;
+	font-weight: 600;
+	transition:
+		transform 0.15s ease,
+		box-shadow 0.2s ease,
+		background-color 0.2s ease;
+}
+
+.btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 14px rgba(37, 99, 235, 0.12);
+}
+
+.btn-outline-dark {
+	color: #1f2937;
+	border-color: rgba(31, 41, 55, 0.35);
+	background-color: rgba(255, 255, 255, 0.6);
+}
+
+.btn-outline-dark:hover {
+	background-color: #1f2937;
+	border-color: #1f2937;
+	color: #ffffff;
+}
+
+.navbar-nav .nav-link,
+.navbar-nav form button.nav-link {
+	color: #1f2937;
+	background: transparent;
+	border: none;
+	padding: 0.5rem 0.75rem;
 }
 
 .actions {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center; /* o flex-end, según el diseño */
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
 }
 
 .actions form {
-    margin: 0;
-    display: inline-flex;
-    align-items: center;
+	margin: 0;
+	display: inline-flex;
+	align-items: center;
 }
 
 .comment {
-    margin: 1.25rem 0 1.25rem 1.25rem;
+	margin: 1.25rem 0 1.25rem 1.25rem;
 }
 
 .comment h5 {
-    margin-bottom: .1rem;    
+	margin-bottom: 0.1rem;
 }
 
 .comment p {
-    margin-top: 1rem;    
+	margin-top: 1rem;
 }
 
 .btn-secondary,
 .btn-secondary:visited {
-    color: #FFFFFF;
-    background-color: #212529;
-    border-color: none; 
-    margin-left: 15px;
+	color: #111827;
+	background-color: #e5e7eb;
+	border-color: #d1d5db;
+	margin-left: 15px;
 }
 
 .btn-secondary:hover {
-    background-color: #000000;
+	background-color: #d1d5db;
+	color: #111827;
 }
 
 .login-center {
-    min-height: calc(100vh - 58px);  /* 58px es el alto de tu header/navbar */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	min-height: calc(100vh - 58px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(180deg, #f8fafc 0%, #edf2ff 100%);
 }
 
 .login-container {
-    width: 400px;
-    border-radius: 10px;
-    padding: 2rem;
+	width: 420px;
+	border-radius: 18px;
+	padding: 2.25rem;
+	background: rgba(255, 255, 255, 0.96);
+	color: #111827;
+	border: 1px solid rgba(148, 163, 184, 0.35);
+	box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.login-container h2 {
+	font-size: clamp(1.8rem, 2vw, 2.3rem);
+	margin-bottom: 2rem;
+}
+
+.login-container .form-label {
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"] {
+	display: block;
+	width: 100%;
+	padding: 0.75rem 0.9rem;
+	background: #ffffff;
+	color: #111827;
+	border: 1px solid #cbd5e1;
+	border-radius: 0.75rem;
+}
+
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+	border-color: #93c5fd;
+	box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.15);
+	outline: none;
 }
 
 .post {
-    margin-bottom: 40px;
+	margin-bottom: 2rem;
+	padding: 1.75rem 1.5rem;
+	background: rgba(255, 255, 255, 0.82);
+	border: 1px solid rgba(148, 163, 184, 0.18);
+	border-radius: 1rem;
+	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
 }
 
 .post h2,
-.post h2 a, 
+.post h2 a,
 .post h2 a:visited,
 .post-title,
 .post-form {
-    color: #999999;  
-    text-decoration: none;
+	color: #111827;
+	text-decoration: none;
+}
+
+.post h2 a:hover {
+	color: #2563eb;
+}
+
+.post > p {
+	color: #374151;
+	line-height: 1.8;
+	margin-bottom: 1.5rem;
 }
 
 .post button {
-    margin: 0;
+	margin: 0;
 }
 
 .post-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1.5rem;
+	padding-bottom: 0.9rem;
+	border-bottom: 1px solid rgba(148, 163, 184, 0.2);
 }
 
 .post-header time,
 .comment time {
-    color: #AAAAAA;
-    margin-bottom: 0;
-    font-size: 0.9em;
+	color: #6b7280;
+	margin-bottom: 0;
+	font-size: 0.9em;
 }
 
 .post-header h2 {
-    margin: 0;
-    font-size: 2rem;
-    font-weight: 700;
+	margin: 0;
+	font-size: clamp(1.6rem, 2vw, 2.2rem);
+	font-weight: 700;
 }
 
 .post-form a,
-.post-form button{
-    margin: 0;
+.post-form button {
+	margin: 0;
 }
 
-.post-form textarea, 
-.post-form input {
-    width: 100%;
+.post-form textarea,
+.post-form input,
+.form-control {
+	width: 100%;
+	background: #ffffff;
+	color: #111827;
+	border: 1px solid #cbd5e1;
+	border-radius: 0.75rem;
+	padding: 0.75rem 0.9rem;
+	transition:
+		border-color 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.post-form textarea:focus,
+.post-form input:focus,
+.form-control:focus {
+	border-color: #93c5fd;
+	box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.15);
+	outline: none;
 }
 
 .post-title {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
+}
+
+.comment {
+	margin: 1.5rem 0 1.25rem 1.25rem;
+	padding: 1rem 1.1rem;
+	border-left: 4px solid #93c5fd;
+	background: rgba(248, 250, 252, 0.9);
+	border-radius: 0.75rem;
 }
 
 .reset-container {
-    max-width: 550px; /* o el ancho que prefieras */
-    width: 100%;
-    margin: 0 auto;   
+	max-width: 550px;
+	width: 100%;
+	margin: 0 auto;
 }
 
-/* blog/static/blog/styles.css */
 .reset-container input[type="password"] {
-    /* Aplica solo a los inputs de contraseña en el reset */
-    background: #222;
-    color: #fff;
-    border: 1px solid #555;
-    border-radius: 4px;
-    padding: 0.5rem;
-    width: 100%;
-    margin-bottom: 1rem;
+	background: #ffffff;
+	color: #111827;
+	border: 1px solid #cbd5e1;
+	border-radius: 4px;
+	padding: 0.5rem;
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+	.post-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.75rem;
+	}
 }
 
 @media (max-width: 576px) {
-    .login-container {
-      max-width: 90vw;
-      padding: 1.5rem;
-    }
+	.login-container {
+		max-width: 90vw;
+		padding: 1.5rem;
+	}
+
+	.post {
+		padding: 1.25rem 1rem;
+	}
+
+	main.container {
+		padding-top: 2rem;
+	}
 }
