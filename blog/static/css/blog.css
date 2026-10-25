@@ -273,6 +273,19 @@ a:hover {
 	margin-bottom: 1.5rem;
 }
 
+.post-content {
+	color: var(--text-secondary);
+	line-height: 1.8;
+}
+
+.post-content p {
+	margin-bottom: 1.25rem;
+}
+
+.ck.ck-editor__editable_inline {
+	min-height: 20rem;
+}
+
 .post button {
 	margin: 0;
 }
@@ -302,6 +315,11 @@ a:hover {
 .post-form a,
 .post-form button {
 	margin: 0;
+}
+
+.post-form label {
+	font-weight: 700;
+	color: var(--text-primary);
 }
 
 .post-form textarea,

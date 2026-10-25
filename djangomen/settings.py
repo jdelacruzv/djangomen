@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_ckeditor_5',
     'blog.apps.BlogConfig',
 ]
 
@@ -137,6 +138,40 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
+
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff"
+CKEDITOR_5_CONFIGS = {
+    "post": {
+        "language": "es",
+        "toolbar": {
+            "items": [
+                "heading",
+                "|",
+                "bold",
+                "italic",
+                "underline",
+                "link",
+                "|",
+                "bulletedList",
+                "numberedList",
+                "blockQuote",
+                "removeFormat",
+                "undo",
+                "redo",
+            ],
+        },
+        "heading": {
+            "options": [
+                {"model": "paragraph", "title": "Párrafo",
+                    "class": "ck-heading_paragraph"},
+                {"model": "heading2", "view": "h2", "title": "Título",
+                    "class": "ck-heading_heading2"},
+                {"model": "heading3", "view": "h3", "title": "Subtítulo",
+                    "class": "ck-heading_heading3"},
+            ],
+        },
+    },
+}
 
 
 # Default primary key field type

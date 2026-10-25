@@ -10,7 +10,7 @@
 			<a href="{% url 'post_detail' pk=post.pk %}"> {{ post.title }} </a>
 		</h2>
 	</div>
-	<p>{{ post.text|truncatechars:250 }}</p>
+	<p>{{ post.text|striptags|truncatechars:250 }}</p>
 	<a
 		class="btn btn-outline-dark mt-2"
 		href="{% url 'post_detail' pk=post.pk %}"

@@ -21,6 +21,7 @@
     <!-- CSS personalizado -->
 		<link rel="stylesheet" href="{% static 'css/blog.css' %}" />
     <link rel="icon" type="image/svg+xml" href="{% static 'cpu.svg' %}?v=2" />
+    {% block extra_head %}{% endblock %}
 	</head>
 	{% comment %} <body class="{% block body_class %}{% endblock %}"> {% endcomment %}
   <body>

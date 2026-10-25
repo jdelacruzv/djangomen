@@ -1,4 +1,4 @@
-{% extends 'blog/base.html' %} {% block content %}
+{% extends 'blog/base.html' %} {% load richtext %} {% block content %}
 <article class="post">
 	<div class="post-header">
 		<h2>{{ post.title }}</h2>
@@ -54,7 +54,7 @@
 		</aside>
 	</div>
 
-	<p>{{ post.text|linebreaksbr }}</p>
+	<div class="post-content">{{ post.text|rich_text }}</div>
 </article>
 
 <hr />
