@@ -87,9 +87,12 @@ def post_publish(request, pk):
 
 @login_required
 def post_remove(request, pk):
+    # 1. Buscamos el post o devolvemos error 404 si no existe
     post = get_object_or_404(Post, pk=pk)
     if request.method == 'POST':
+        # 2. Ejecutamos el método delete() de Django para borrarlo de la base de datos
         post.delete()
+    # 3. Redireccionamos al usuario a la página principal del blog
     return redirect('post_list')
 
 

@@ -1,129 +1,147 @@
-{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-    <meta name="color-scheme" content="only light" />
-		<title>DjangoMen's Blog</title>
-	   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Bootstrap CSS -->
-		<link
-      rel="stylesheet"
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css"
-			integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT"
-			crossorigin="anonymous"
-		/>
-    <!-- Google Fonts -->
-		<link
-         rel="stylesheet"
-         href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext"
-		/>
-    <!-- CSS personalizado -->
-    <link rel="stylesheet" href="{% static 'css/blog.css' %}?v=3" />
-    <link rel="icon" type="image/svg+xml" href="{% static 'cpu.svg' %}?v=2" />
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}DjangoMen's Blog{% endblock %}</title>
+    
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+        /* Estilo personalizado para tarjetas */
+        .card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.08)!important;
+        }
+    </style>
+    
     {% block extra_head %}{% endblock %}
-	</head>
-	{% comment %} <body class="{% block body_class %}{% endblock %}"> {% endcomment %}
-  <body>
-    <!-- Encabezado -->
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-light">
-				<div class="container-fluid">
-          <!-- Nombre del blog -->
-          <h1>
-            <a href="/" class="navbar-brand d-flex align-items-center text-dark">
-                <span>DjangoMen's Blog</span>
-					  </a>
-          </h1>
-          <!-- Botón hamburguesa -->
-				  <button
-            class="navbar-toggler"
-            data-bs-toggle="collapse"
-            type="button"
-            data-bs-target="#navbarMenu"
-            aria-controls="navbarMenu"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <!-- Menú colapsable -->
-          <div class="collapse navbar-collapse" id="navbarMenu">
-            <ul class="navbar-nav ms-auto mb-2 mb-md-0">              
-              <!-- Menu listar -->
-              <li class="nav-item">
-                <a href="{% url 'post_list' %}" class="nav-link d-flex align-items-center">
-                  {% include './icons/list.svg' %}<span class="ms-1">Listar</span>
-                </a>              
-              </li>              
-              {% if user.is_authenticated %}
-                <!-- Menu agregar -->
-                <li class="nav-item">
-                  <a href="{% url 'post_new' %}" class="nav-link d-flex align-items-center">
-                    {% include './icons/plus-circle.svg' %}<span class="ms-1">Agregar</span>
-                  </a>
-                </li>
-                <!-- Menu borradores -->
-                <li class="nav-item">
-                  <a href="{% url 'post_draft_list' %}" class="nav-link d-flex align-items-center">
-                    {% include './icons/pencil-square.svg' %}<span class="ms-1">Borradores</span>
-                  </a>
-                </li>
-                <!-- Menu admin -->
-                <li class="nav-item">
-                  <a href="{% url 'admin:index' %}" class="nav-link d-flex align-items-center">
-                    {% include './icons/gear.svg' %}<span class="ms-1">Admin</span>
-                  </a>
-                </li>
-                <!-- Menu logout -->
-                <li class="nav-item">
-                  <form 
-                    method="POST" 
-                    action="{% url 'logout' %}" 
-                    onsubmit="return confirm('¿Estas seguro que deseas salir del sistema?');"
-                  >
-                    {% csrf_token %}
-                    {% comment %} Hello: {{ user.username }} {% endcomment %}
-                    <button type="submit" class="nav-link d-flex align-items-center">
-                      {% include './icons/box-arrow-right.svg' %}<span class="ms-1">Salir</span> 
-                    </button>
-                  </form>	
-                </li>    	         	
-					    {% else %}					
-                <!-- Menu login -->
-                <li class="nav-item">
-                  <a href="{% url 'login' %}" class="nav-link d-flex align-items-center">
-                    {% include './icons/box-arrow-left.svg' %}<span class="ms-1">Entrar</span>
-                  </a>
-                </li>
-					    {% endif %}					    
-            </ul>
-          </div>
+</head>
+<body>
+
+    <!-- NAVBAR MODERNIZADO -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="{% url 'post_list' %}">
+                🚀 DjangoMen's Blog
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center gap-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'post_list' %}">Inicio</a>
+                    </li>
+                    
+                    <!-- Verificamos si el usuario está autenticado en Django -->
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light btn-sm px-3" href="{% url 'post_new' %}">+ Nuevo Post</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" href="{% url 'post_draft_list' %}">Borradores</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light" href="#" role="button" data-bs-toggle="dropdown">
+                                Hola, {{ user.username }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="/admin/">Admin Django</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <!-- Importante: En Django el logout moderno suele requerir POST por seguridad, pero adaptalo a tu vista actual -->
+                                    {% comment %} <form method="post" action="{% url 'logout' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item text-danger">Cerrar Sesión</button>
+                                    </form> {% endcomment %}
+																		<form id="logout-form" action="{% url 'logout' %}" method="post" class="d-inline">
+																		  {% csrf_token %}
+																		  <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
+																		</form>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="btn btn-primary btn-sm px-4" href="{% url 'login' %}">Entrar</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-			</nav>				
-		</header>
-    <!-- Contenido principal -->
-    {% block main %}
-    <main class="container py-5">
-      {% block content %}{% endblock %}
+    </nav>
+
+    <!-- CONTENIDO DINÁMICO DE CADA VISTA -->
+    <main class="container my-5">
+		{% comment %} <main class="container d-flex flex-column justify-content-center py-3"> {% endcomment %}
+        {% block content %}
+        {% endblock %}
     </main>
-    {% endblock %}
-    <!-- Footer -->
-    <footer class="bg-light text-dark text-center py-4 mt-auto border-top">
-      <div class="container">
-        <small>
-          &copy; {% now "Y" %} DjangoMen's Blog &middot; Desarrollado con
-          <a href="https://www.djangoproject.com/" class="text-primary text-decoration-none" target="_blank" rel="noopener">Django</a>
-          y
-          <a href="https://getbootstrap.com/" class="text-primary text-decoration-none" target="_blank" rel="noopener">Bootstrap</a>
-        </small>
-      </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-top py-4 text-center text-muted">
+        <div class="container">
+            <small>© 2026 DjangoMen's Blog · Desarrollado con 
+                <a href="https://www.djangoproject.com/" class="text-decoration-none fw-semibold" target="_blank">Django</a> y 
+                <a href="https://getbootstrap.com/" class="text-decoration-none fw-semibold" target="_blank">Bootstrap</a>
+            </small>
+        </div>
     </footer>
-    <!-- Bootstrap Bundle JS -->
-		<script 
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" 
-      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" 
-      crossorigin="anonymous">
-    </script>
-	</body>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+		<!-- SweetAlert2 CSS y JS CDN -->
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		<!-- Script de confirmación de cierre de sesión con SweetAlert2 -->
+		<script>
+		    document.addEventListener('DOMContentLoaded', function () {
+		        const logoutForm = document.getElementById('logout-form');
+				
+		        if (logoutForm) {
+		            logoutForm.addEventListener('submit', function (e) {
+		                e.preventDefault(); // Detiene el envío inmediato
+								
+		                Swal.fire({
+		                    title: '¿Cerrar sesión?',
+		                    text: '¿Estás seguro de que deseas salir del sistema?',
+		                    icon: 'warning',
+		                    showCancelButton: true,
+		                    confirmButtonColor: '#0d6efd', 
+		                    cancelButtonColor: '#6c757d',  
+		                    confirmButtonText: 'Sí, salir',
+		                    cancelButtonText: 'Cancelar',
+		                    reverseButtons: true,
+		                    customClass: {
+		                        popup: 'rounded-4 shadow' 
+		                    }
+		                }).then((result) => {
+		                    if (result.isConfirmed) {
+		                        logoutForm.submit(); // Si confirma, ejecuta el cierre de sesión
+		                    }
+		                });
+		            });
+		        }
+		    });
+		</script>
+</body>
 </html>

@@ -1,23 +1,47 @@
-{% extends 'blog/base.html' %} {% block content %} {% for post in posts %}
-<article class="post">
-	<div
-		class="post-header d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2"
-	>
-		<h2 class="order-2 order-md-1 mb-0">
-			<a href="{% url 'post_detail' pk=post.pk %}"> {{ post.title }} </a>
-		</h2>
-	</div>
-	<p>{{ post.text|striptags|truncatechars:250 }}</p>
-	<div class="post-footer">
-		<a
-			class="btn btn-outline-dark"
-			href="{% url 'post_detail' pk=post.pk %}"
-			role="button"
-		>
-			Comentarios: {{ post.approved_comments.count }}
-		</a>
-		<time>{{ post.published_date|date:"j F, Y" }}</time>
-	</div>
-</article>
-<hr />
-{% endfor %} {% endblock %}
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 text-center">
+        <h1 class="fw-bold display-5">Artículos sobre Desarrollo & Python</h1>
+        <p class="text-muted lead">Aprende Django, buenas prácticas y desarrollo web paso a paso.</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    {% for post in posts %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm card-hover rounded-4 bg-white">
+                <div class="card-body d-flex flex-column p-4">
+                    <!-- Categoría simulada o dinámica -->
+                    <div class="mb-2">
+                        <span class="badge bg-primary-subtle text-primary fw-semibold px-2 py-1 rounded-pill small">Django / Python</span>
+                    </div>
+                    
+                    <!-- Título del post enlazado a su detalle -->
+                    <h3 class="card-title h5 fw-bold mb-3">
+                        <a href="{% url 'post_detail' pk=post.pk %}" class="text-dark text-decoration-none stretched-link">
+                            {{ post.title }}
+                        </a>
+                    </h3>
+                    
+                    <!-- Extracto del texto -->
+                    <p class="card-text text-muted small mb-4">
+                        {{ post.text|striptags|truncatewords:20 }}
+                    </p>
+                    
+                    <!-- Footer interno de la tarjeta -->
+                    <div class="mt-auto pt-3 border-top d-flex justify-content-between align-items-center">
+                        <small class="text-muted">💬 {{ post.comments.count|default:"0" }} comentarios</small>
+                        <small class="text-muted fw-medium">{{ post.created_date|date:"d M, Y" }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="col-12 text-center py-5">
+            <p class="text-muted fs-5">No hay artículos publicados todavía.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,37 +1,72 @@
-{% extends "blog/base.html" %} {% block main %}
-<div class="login-center">
-	<div class="login-container text-dark bg-light border shadow-sm">
-		<h2 class="mb-5 text-center">Iniciar sesión</h2>
-		<form method="POST" action="{% url 'login' %}">
-			{% csrf_token %} {% if form.errors %}
-			<div class="alert alert-danger" role="alert">
-				Su nombre de usuario y contraseña no coinciden. Por favor intente de nuevo.
-			</div>
-			{% endif %}
+{% extends "blog/base.html" %} 
 
-			<div class="mb-4">
-				<label for="{{ form.username.id_for_label }}" class="form-label"
-					>{{ form.username.label }}</label
-				>
-				{{ form.username }}
-			</div>
+{% block content %}
+<!-- Estilo local para forzar el ancho total de los inputs de Django -->
+<style>
+    .card form input[type="text"],
+    .card form input[type="password"] {
+        width: 100% !important;
+        display: block !important;
+    }
+</style>
 
-			<div class="mb-4">
-				<label for="{{ form.password.id_for_label }}" class="form-label"
-					>{{ form.password.label }}</label
-				>
-				{{ form.password }}
-			</div>
+<!-- Contenedor flex para centrar el formulario de forma absoluta en el espacio visible -->
+{% comment %} <div class="row justify-content-center align-items-center w-100 m-0"> {% endcomment %}
+	<div class="row justify-content-center align-items-center w-100 m-0 mt-4 pt-2">
+    <div class="col-12 d-flex justify-content-center">
+        
+        <!-- Tarjeta con ancho fijo idéntico para mobile y desktop -->
+        <div class="card border-0 shadow-sm rounded-4 bg-white px-5 py-3 px-md-5 w-100" style="max-width: 380px;">
+            <div class="card-body p-0">
+                
+                <div class="text-center mb-3">
+                    <h2 class="fw-bold text-dark fs-3 mb-1">🔑 Iniciar Sesión</h2>
+                    <p class="text-muted small">Ingresa tus credenciales para acceder</p>
+                </div>
+                
+                <form method="POST" action="{% url 'login' %}" class="w-100">
+                    {% csrf_token %} 
+                    
+                    {% if form.errors %}
+                        <div class="alert alert-danger py-2 small rounded-3 mb-3 text-center w-100" role="alert">
+                            Usuario o contraseña incorrectos.
+                        </div>
+                    {% endif %}
+										<!-- Campo Usuario -->
+                    <div class="mb-3 text-start w-100">
+                        <label for="{{ form.username.id_for_label }}" class="form-label d-block small fw-semibold text-secondary">
+                            {{ form.username.label }}
+                        </label>
+                        <div class="w-100">
+            							{{ form.username }}
+        								</div>
+                    </div>
+										<!-- Campo Contraseña -->
+                    <div class="mb-3 text-start w-100">
+                        <label for="{{ form.password.id_for_label }}" class="form-label d-block small fw-semibold text-secondary">
+                            {{ form.password.label }}
+                        </label>
+                        <div class="w-100">
+            							{{ form.password }}
+        								</div>
+                    </div>
 
-			<input type="submit" value="login" class="btn btn-primary w-100 mt-2" />
-			<input type="hidden" name="next" value="{{ next }}" />
+                    <input type="hidden" name="next" value="{{ next }}" />
 
-			<div class="text-center mt-5">
-				<a href="{% url 'password_reset' %}" class="text-decoration-none text-info">
-					¿Olvidaste tu contraseña?
-				</a>
-			</div>
-		</form>
-	</div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold rounded-pill shadow-sm mt-2">
+                        Entrar al Sistema
+                    </button>
+
+                    <div class="text-center mt-3 pt-3 border-top">
+                        <a href="{% url 'password_reset' %}" class="text-decoration-none small text-muted fw-semibold">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
 </div>
 {% endblock %}

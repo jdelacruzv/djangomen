@@ -1,96 +1,138 @@
-{% extends 'blog/base.html' %} {% load richtext %} {% block content %}
-<article class="post">
-	<div class="post-header">
-		<h2>{{ post.title }}</h2>
-		<aside class="actions">
-			{% if not post.published_date %}
-			<form
-				method="POST"
-				action="{% url 'post_publish' pk=post.pk %}"
-				class="post-form"
-				onsubmit="return confirm('¿Deseas publicar el post?');"
-			>
-				{% csrf_token %}
-				<button
-					type="submit"
-					class="btn btn_md btn-secondary"
-					name="publish"
-					title="Publicar post"
-				>
-					{% include './icons/cloud-upload-fill.svg' %}
-				</button>
-			</form>
-			{% endif %} {% if user.is_authenticated %}
-			<form class="post-form">
-				{% csrf_token %}
-				<a
-					class="btn btn-secondary"
-					href="{% url 'post_edit' pk=post.pk %}"
-					title="Editar post"
-				>
-					{% include './icons/pencil-fill.svg' %}
-				</a>
-			</form>
+{% extends 'blog/base.html' %}
 
-			<form
-				method="POST"
-				action="{% url 'post_remove' pk=post.pk %}"
-				class="post-form"
-				onsubmit="
-					return confirm('¿Estás seguro de que deseas eliminar este post?');
-				"
-			>
-				{% csrf_token %}
-				<button
-					type="submit"
-					class="btn btn-md btn-secondary"
-					name="delete"
-					title="Eliminar post"
-				>
-					{% include './icons/trash-fill.svg' %}
-				</button>
-			</form>
-			{% endif %}
-		</aside>
-	</div>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        
+        <!-- Botón de regreso -->
+        <div class="mb-4">
+            <a href="{% url 'post_list' %}" class="text-decoration-none text-muted small fw-semibold">
+                ← Volver al listado
+            </a>
+        </div>
 
-	<div class="post-content">{{ post.text|rich_text }}</div>
-</article>
+        <!-- Cabecera del Artículo -->
+        <article class="bg-white p-4 p-md-5 rounded-4 shadow-sm border-0 mb-5">
+            <div class="mb-3">
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-1 rounded-pill">Python / Django</span>
+                <span class="text-muted small ms-3">📅 {{ post.created_date|date:"d de F, Y" }}</span>
+                {% if post.author %}
+                    <span class="text-muted small ms-3">✍️ {{ post.author }}</span>
+                {% endif %}
+            </div>
 
-<hr />
+            <h1 class="fw-bold display-6 mb-4 text-dark">{{ post.title }}</h1>
 
-<a
-	class="btn btn-outline-dark mb-3"
-	href="{% url 'add_comment_to_post' pk=post.pk %}"
-	role="button"
->
-	Agregar comentario
-</a>
+            <!-- Contenido principal del post con el filtro |safe -->
+            <div class="post-body text-secondary lh-lg fs-6">
+                {{ post.text|safe }}
+            </div>
 
-{% for comment in comments %}
-<div class="comment">
-	<div class="date">
-		<time class="order-1 order-md-2">{{ comment.created_date }}</time>
-		{% if not comment.approved_comment %}
-		<a
-			class="btn btn-outline-danger"
-			href="{% url 'comment_remove' pk=comment.pk %}"
-			role="button"
-		>
-			{% include './icons/hand-thumbs-down-fill.svg' %}
-		</a>
-		<a
-			class="btn btn-outline-success"
-			href="{% url 'comment_approve' pk=comment.pk %}"
-			role="button"
-		>
-			{% include './icons/hand-thumbs-up-fill.svg' %}
-		</a>
-		{% endif %}
-	</div>
-	<h5><strong>{{ comment.author }}</strong></h5>
-	<p>{{ comment.text|linebreaksbr }}</p>
+            <!-- Botones de edición/borrador si el usuario es el autor o staff -->
+            {% if user.is_authenticated %}
+                <div class="mt-4 pt-4 border-top d-flex gap-2">
+										<!-- Botón Publicar (si es borrador) -->
+                    {% if post.published_date is None %}
+                        <form id="form-publish" action="{% url 'post_publish' pk=post.pk %}" method="post" class="d-inline">
+        									{% csrf_token %}
+        									<button type="button" onclick="confirmPublish()" class="btn btn-sm btn-success fw-semibold">
+														Publicar
+													</button>
+    										</form>
+                    {% endif %}
+										
+										<!-- Botón Editar -->
+                    <a class="btn btn-sm btn-outline-secondary fw-semibold" href="{% url 'post_edit' pk=post.pk %}">Editar Post</a>
+                    
+										<!-- Botón Eliminar -->
+										<form id="form-delete" action="{% url 'post_remove' pk=post.pk %}" method="post" class="d-inline">
+    									{% csrf_token %}
+    									<button type="button" onclick="confirmDelete()" class="btn btn-sm btn-outline-danger fw-semibold">
+												Eliminar
+											</button>
+										</form>
+                </div>
+            {% endif %}
+        </article>
+
+        <!-- SECCIÓN DE COMENTARIOS -->
+        <section class="bg-white p-4 p-md-5 rounded-4 shadow-sm border-0">
+            <h3 class="fw-bold h4 mb-4">Comentarios ({{ post.comments.count|default:"0" }})</h3>
+
+            <!-- Listado de comentarios existentes -->
+            <div class="comments-list mb-4">
+                {% for comment in post.comments.all %}
+                    <div class="p-3 bg-light rounded-3 mb-3 border-start border-4 border-primary">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="fw-bold small text-dark">{{ comment.author }}</span>
+                            <small class="text-muted" style="font-size: 0.75rem;">{{ comment.created_date|date:"d M, Y - H:i" }}</small>
+                        </div>
+                        <p class="mb-0 text-secondary small">{{ comment.text }}</p>
+                    </div>
+                {% empty %}
+                    <p class="text-muted small fst-italic">Aún no hay comentarios. ¡Sé el primero en comentar!</p>
+                {% endfor %}
+            </div>
+
+            <!-- Botón para añadir comentario o formulario directo -->
+            <div class="mt-4">
+                <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-outline-primary btn-sm fw-semibold">
+                    💬 Agregar un comentario
+                </a>
+            </div>
+        </section>
+
+    </div>
 </div>
-{% empty %}
-<p>Aún no hay comentarios aquí :(</p>
-{% endfor %} {% endblock %}
+{% block extra_js %}
+<script>
+    // Modal estilizada para eliminar post (Corregido a Swal.fire)
+    function confirmDelete() {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción eliminará el artículo permanentemente y no se podrá recuperar.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, eliminar post',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'rounded-4 shadow',
+                confirmButton: 'btn btn-danger fw-semibold px-4 rounded-pill me-3',
+                cancelButton: 'btn btn-secondary fw-semibold px-4 rounded-pill me-2'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('form-delete').submit();
+            }
+        });
+    }
+
+    // Modal estilizada para publicar borrador (Corregido a Swal.fire)
+    function confirmPublish() {
+        Swal.fire({
+            title: '¿Publicar artículo?',
+            text: "El post pasará a ser visible de forma pública en la lista principal.",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#198754',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Sí, publicar',
+            cancelButtonText: 'Cancelar',
+            customClass: {
+                popup: 'rounded-4 shadow',
+                confirmButton: 'btn btn-success fw-semibold px-4 rounded-pill me-3',
+                cancelButton: 'btn btn-secondary fw-semibold px-4 rounded-pill me-2'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('form-publish').submit();
+            }
+        });
+    }
+</script>
+{% endblock %}
+{% endblock %}
