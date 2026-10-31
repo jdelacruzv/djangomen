@@ -18,20 +18,20 @@ python -c "from django.core.management.utils import get_random_secret_key; print
 
 Home page of the blog without logging in.
 
-![alt text](image-1.png)
+![alt text](image-1.webp)
 
 Login to manage the blog
 
-![alt text](image-2.png)
+![alt text](image-2.webp)
 
 Page with the blog administration menu.
 
-![alt text](image-3.png)
+![alt text](image-3.webp)
 
 Add new post.
 
-![alt text](image-4.png)
+![alt text](image-4.webp)
 
 Publish, edit, and delete a post.
 
-![alt text](image-5.png)
+![alt text](image-5.webp)
