@@ -1,17 +1,40 @@
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse
 from django.utils import timezone
 from .models import Post, Comment
 from .forms import PostForm, CommentForm
 
 
 # Create your views here.
-def post_list(request):
-    # Filtramos los posts que ya han sido publicados y los ordenamos en orden descendente
-    posts = Post.objects.filter(
+def published_posts():
+    return Post.objects.filter(
         published_date__lte=timezone.now()).order_by('-published_date')
-    # Renderizamos la plantilla con los posts filtrados
-    return render(request, 'blog/post_list.html', {'posts': posts})
+
+
+def post_list(request):
+    query = request.GET.get('q', '').strip()
+    posts = published_posts()
+    if query:
+        posts = posts.filter(title__icontains=query)
+    return render(request, 'blog/post_list.html', {'posts': posts, 'query': query})
+
+
+def post_search_suggestions(request):
+    query = request.GET.get('q', '').strip()
+    if len(query) < 2:
+        return JsonResponse({'results': []})
+
+    matches = published_posts().filter(
+        title__icontains=query
+    ).values('pk', 'title')[:5]
+    results = [
+        {'title': post['title'], 'url': reverse(
+            'post_detail', args=[post['pk']])}
+        for post in matches
+    ]
+    return JsonResponse({'results': results})
 
 
 def post_detail(request, pk):

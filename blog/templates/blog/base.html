@@ -31,6 +31,48 @@
             transform: translateY(-4px);
             box-shadow: 0 .5rem 1rem rgba(0,0,0,.08)!important;
         }
+        .site-search-band {
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .site-search {
+            position: relative;
+            max-width: 760px;
+            margin-inline: auto;
+        }
+        .site-search-results {
+            position: absolute;
+            z-index: 1030;
+            top: calc(100% + .25rem);
+            right: 0;
+            left: 0;
+            display: none;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: .5rem;
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .12);
+        }
+        .site-search-results.is-open {
+            display: block;
+        }
+        .site-search-result,
+        .site-search-message {
+            display: block;
+            padding: .65rem .9rem;
+        }
+        .site-search-result + .site-search-result {
+            border-top: 1px solid #edf0f2;
+        }
+        .site-search-result:hover,
+        .site-search-result:focus {
+            background: #f1f5f3;
+        }
+        @media (max-width: 575.98px) {
+            .site-search-band .container {
+                padding-inline: 1rem;
+            }
+        }
     </style>
     
     {% block extra_head %}{% endblock %}
@@ -90,6 +132,24 @@
         </div>
     </nav>
 
+    <div class="site-search-band py-3">
+        <div class="container">
+            <form class="site-search" id="site-search" action="{% url 'post_list' %}" method="get"
+                  data-suggestions-url="{% url 'post_search_suggestions' %}">
+                <label class="visually-hidden" for="site-search-input">Buscar artículos</label>
+                <div class="input-group">
+                    <input class="form-control" id="site-search-input" type="search" name="q"
+                           value="{{ request.GET.q|default:'' }}" placeholder="Buscar artículos..."
+                           autocomplete="off" role="combobox" aria-autocomplete="list"
+                           aria-expanded="false" aria-controls="site-search-results">
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </div>
+                <div class="site-search-results" id="site-search-results" role="listbox"
+                     aria-label="Sugerencias de artículos" aria-live="polite"></div>
+            </form>
+        </div>
+    </div>
+
     <!-- CONTENIDO DINÁMICO DE CADA VISTA -->
     <main class="container my-5">
 		{% comment %} <main class="container d-flex flex-column justify-content-center py-3"> {% endcomment %}
@@ -109,6 +169,85 @@
 
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchForm = document.getElementById('site-search');
+            const searchInput = document.getElementById('site-search-input');
+            const resultsList = document.getElementById('site-search-results');
+            if (!searchForm || !searchInput || !resultsList) return;
+
+            let debounceTimer;
+            let activeRequest;
+
+            function closeResults() {
+                resultsList.replaceChildren();
+                resultsList.classList.remove('is-open');
+                searchInput.setAttribute('aria-expanded', 'false');
+            }
+
+            function showMessage(message) {
+                const item = document.createElement('span');
+                item.className = 'site-search-message text-muted';
+                item.textContent = message;
+                resultsList.replaceChildren(item);
+                resultsList.classList.add('is-open');
+                searchInput.setAttribute('aria-expanded', 'true');
+            }
+
+            searchInput.addEventListener('input', function () {
+                window.clearTimeout(debounceTimer);
+                if (activeRequest) activeRequest.abort();
+
+                const query = searchInput.value.trim();
+                if (query.length < 2) {
+                    closeResults();
+                    return;
+                }
+                closeResults();
+
+                debounceTimer = window.setTimeout(async function () {
+                    activeRequest = new AbortController();
+                    showMessage('Buscando...');
+                    const url = new URL(searchForm.dataset.suggestionsUrl, window.location.origin);
+                    url.searchParams.set('q', query);
+
+                    try {
+                        const response = await fetch(url, { signal: activeRequest.signal });
+                        if (!response.ok) throw new Error('Search request failed');
+                        const data = await response.json();
+                        if (searchInput.value.trim() !== query) return;
+
+                        if (!data.results.length) {
+                            showMessage('No se encontraron artículos.');
+                            return;
+                        }
+
+                        const links = data.results.map(function (result) {
+                            const link = document.createElement('a');
+                            link.className = 'site-search-result text-decoration-none text-dark';
+                            link.href = result.url;
+                            link.role = 'option';
+                            link.textContent = result.title;
+                            return link;
+                        });
+                        resultsList.replaceChildren(...links);
+                        resultsList.classList.add('is-open');
+                        searchInput.setAttribute('aria-expanded', 'true');
+                    } catch (error) {
+                        if (error.name !== 'AbortError') closeResults();
+                    }
+                }, 250);
+            });
+
+            searchInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') closeResults();
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!searchForm.contains(event.target)) closeResults();
+            });
+        });
+    </script>
     {% block extra_js %}{% endblock %}
 		<!-- SweetAlert2 CSS y JS CDN -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
