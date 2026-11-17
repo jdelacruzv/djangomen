@@ -15,7 +15,7 @@
         <article class="bg-white p-4 p-md-5 rounded-4 shadow-sm border-0 mb-5">
             <div class="mb-3">
                 <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-1 rounded-pill">Python / Django</span>
-                <span class="text-muted small ms-3">📅 {{ post.created_date|date:"d de F, Y" }}</span>
+                <span class="text-muted small ms-3">📅 {{ post.published_date|date:"d de F, Y" }}</span>
                 {% if post.author %}
                     <span class="text-muted small ms-3">✍️ {{ post.author }}</span>
                 {% endif %}
